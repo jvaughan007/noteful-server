@@ -11,7 +11,7 @@ const serializeNote = note => ({
     id: note.id,
     name: xss(note.name),
     modified: note.modified,
-    folder_id: xss(note.folder_id),
+    folderId: note.folder_id,
     content: xss(note.content),
 });
 
@@ -25,14 +25,14 @@ notesRouter
             .catch(next);
     })
     .post(bodyParser, (req, res, next) => {
-        for (const field of ['name', 'folder_id', 'content']) {
+        for (const field of ['name', 'folderId', 'content']) {
             if (!req.body[field]) {
                 logger.error(`${field} is required`);
                 return res.status(400).send(`'${field}' is required`);
             }
         }
 
-        const {name, folder_id, content} = req.body;
+        const {name, folderId, content} = req.body;
 
         // if (!Number.isInteger(folder_id) || folder_id < 1) {
         //     console.log(req.body.folder_id);
@@ -41,7 +41,7 @@ notesRouter
         // }
 
 
-        const newNote = {name, folder_id, content};
+        const newNote = {name, folder_id: folderId, content};
         console.log(newNote);
 
         NotesService.insertNote(

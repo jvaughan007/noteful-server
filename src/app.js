@@ -18,8 +18,8 @@ app.use(cors());
 app.use(helmet());
 // app.use(validateBearerToken);
 
-app.use(notesRouter);
-app.use(foldersRouter);
+app.use('/api', notesRouter);
+app.use('/api', foldersRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
